@@ -1,0 +1,19 @@
+# Claude Code local settings (per-machine permission allowlist)
+.claude/settings.local.json
+
+# Queue-runner artifacts
+running.log
+
+# test-runner artifacts
+test-report.md
+.test-runner-logs/
+
+# OS
+.DS_Store
+
+# Editor
+.vscode/
+.idea/
+
+# Node (in case template/testing-skeleton gets copied + pnpm install)
+node_modules/

@@ -1,0 +1,92 @@
+# .tech-constraints.yaml — 技術棧約束（hook 讀取的強制規範）
+#
+# 這個檔被 .claude/hooks/pre-write-guard.sh 讀取，違反會 exit 2 擋下。
+# 每個 project 依自己的技術棧填寫，由使用者跟 AI coding agent 討論後產出。
+#
+# 為什麼放這裡：
+#   .claude/rules/ 是給 AI agent 讀的「軟規範」，它會忘。
+#   .tech-constraints.yaml 是給 hook 讀的「硬規範」，用 grep 判斷，不會忘。
+#
+# ═══════════════════════════════════════════════════════════════════════════
+
+# 允許的副檔名（若設定，則其他副檔名都會被擋）
+# 留空 [] 表示不限制
+allowed_extensions: []
+# 範例：TinyGo WASM 專案
+# allowed_extensions:
+#   - .go
+#   - .md
+#   - .yaml
+#   - .toml
+#   - .sh
+
+# 禁止的副檔名（黑名單，優先於 allowed_extensions 白名單）
+forbidden_extensions: []
+# 範例：禁止 TypeScript 進入 TinyGo 專案
+# forbidden_extensions:
+#   - .ts
+#   - .tsx
+#   - .js
+#   - .jsx
+
+# 禁止的路徑 pattern（正則表達式）
+# 超過內建的「平行目錄」禁令，可加更多
+forbidden_path_patterns: []
+# 範例：
+# forbidden_path_patterns:
+#   - "node_modules/"
+#   - "dist/"
+#   - "\\.next/"
+
+# 禁止的 import/require 語句（grep pattern）
+# 在 code 檔案內偵測禁用依賴
+forbidden_imports: []
+# 範例：禁止用 moment.js
+# forbidden_imports:
+#   - "require\\(['\"]moment['\"]\\)"
+#   - "from ['\"]moment['\"]"
+#   - "import moment"
+
+# 允許的路徑 + 副檔名組合
+# 比 allowed_extensions 更精細：某個路徑下才允許某個副檔名
+# 格式：path_pattern: [extension_list]
+path_extension_rules: {}
+# 範例：registry/components/ 只允許 .go，其他路徑不限
+# path_extension_rules:
+#   "registry/components/.*":
+#     - .go
+#     - .yaml
+#     - .md
+#     - .wasm
+
+# 強制的檔案存在條件（某個檔案存在時，另一個也必須存在）
+# 用於保證零件完整性
+required_siblings: {}
+# 範例：main.go 存在時，component.contract.yaml 也必須存在
+# required_siblings:
+#   "main\\.go$":
+#     - "component.contract.yaml"
+
+# 禁止的 shell 指令 pattern（給 pre-bash-guard.sh 用）
+forbidden_bash_patterns: []
+# 範例：
+# forbidden_bash_patterns:
+#   - "npm install.*moment"
+#   - "pip install.*flask"
+
+# ═══════════════════════════════════════════════════════════════════════════
+# 語意層約束（agent 會讀 CLAUDE.md 時看到，軟性提醒）
+# 這些寫在這裡是為了單一來源，CLAUDE.md 會引用
+# ═══════════════════════════════════════════════════════════════════════════
+
+description: |
+  # 這個專案的技術棧約束說明
+  # 寫給 agent 看的自然語言，簡潔即可
+  #
+  # 例：
+  # 這個專案只能用 TinyGo 寫 WASM 零件。
+  # 嚴禁 TypeScript/JavaScript。
+  # 主要模組：registry/components/*/main.go
+  # 編譯：tinygo build -o main.wasm -target=wasi main.go
+
+  （填入專案約束說明）

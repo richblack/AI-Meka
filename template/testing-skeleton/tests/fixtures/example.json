@@ -1,0 +1,6 @@
+{
+  "users": [
+    { "id": "usr_1", "email": "alice@example.com", "email_verified": true },
+    { "id": "usr_2", "email": "bob@example.com", "email_verified": false }
+  ]
+}
